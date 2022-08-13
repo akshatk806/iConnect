@@ -1,3 +1,3 @@
 module.exports.home=function(request,respone){
-    respone.send('<h1>Express is up for iConnect</h1>')
+    respone.end('<h1>Express is up for iConnect</h1>')
 }
