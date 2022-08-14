@@ -5,5 +5,11 @@ const users_controller=require('../controllers/users_controller.js')
 
 router.get('/profile',users_controller.profile)
 router.get('/posts',users_controller.posts)
+router.get('/sign-up',users_controller.signup)
+router.get('/sign-in',users_controller.signin)
+
+router.post('/create',users_controller.create)
+router.post('/create-session',users_controller.createSession)
+router.post('/destroy-session',users_controller.destroySession)
 
 module.exports=router;
