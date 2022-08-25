@@ -1,5 +1,6 @@
 User=require('../models/user')
 
+// All these are actions
 module.exports.profile=function(request,respone){
     respone.render('profile',{
         title:"iConnect | Profile"
@@ -59,4 +60,15 @@ module.exports.create=function(request,respone){
 // Signing in the user
 module.exports.createSession=function(request,response){
     return response.redirect('/');
+}
+
+// Sign out
+module.exports.destroySession=function(request,response,next){
+    request.logout(function(err){
+        if(err){
+            console.log("Error in logging-out");
+            return;
+        }
+    });
+    return response.redirect('/users/sign-in');
 }
