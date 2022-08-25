@@ -20,3 +20,29 @@ module.exports.signin=function(request,respone){
         title:"iConnect | Signin"
     })
 }
+
+// get the sign up data
+module.exports.create=function(request,respone){
+    if(request.body.password!=request.body.cpassword){
+        return respone.redirect('back');
+    }
+    User.findOne({
+        email:request.body.email
+    },function(err,user){
+        if(err){
+            console.log("Error in finding user in signing up");
+        }
+        if(!user){
+            User.create(request.body,function(err,user){
+                if(err){
+                    console.log("Error in creating the user while signing up");
+                    return;
+                }
+                return respone.redirect('/users/sign-in')
+            })
+        }
+        else{
+            return respone.redirect('back');
+        }
+    })
+}
