@@ -46,3 +46,8 @@ module.exports.create=function(request,respone){
         }
     })
 }
+
+// Signing in the user
+module.exports.createSession=function(request,response){
+    return response.redirect('/');
+}
