@@ -1,3 +1,5 @@
+User=require('../models/user')
+
 module.exports.profile=function(request,respone){
     respone.render('profile',{
         title:"iConnect | Profile"
@@ -9,13 +11,20 @@ module.exports.posts=function(request,respone){
     })
 }
 
+// render the signup page and restrict the user if user is logged-in then the signup and signin page is not visible to that user
 module.exports.signup=function(request,respone){
+    if(request.isAuthenticated()){
+        return respone.redirect('/users/profile')
+    }
     return respone.render('user_sign_up',{
         title:"iConnect | Signup"
     })      
 }
 
 module.exports.signin=function(request,respone){
+    if(request.isAuthenticated()){
+        return respone.redirect('/users/profile')
+    }
     return respone.render('user_sign_in',{
         title:"iConnect | Signin"
     })
