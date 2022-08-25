@@ -9,6 +9,7 @@ const db=require('./config/mongoose');
 const session=require('express-session')
 const passport=require('passport')
 const passportLocal=require('./config/passport-local-strategy.js');
+const MongoStore=require('connect-mongo');
 
 app.use(express.urlencoded());
 
@@ -22,6 +23,7 @@ app.set('views','./views');
 
 
 // Middleware for session cookie
+// Mongo store is use to the session cookie in the db
 app.use(session({
     name:'iConnect',    // name of the cookie
     secret:'blahsomething',   // TODO -> Change the secret before deploying at production
@@ -29,7 +31,18 @@ app.use(session({
     resave:false,
     cookie:{
         maxAge:(1000*60*100)       // maxAge is in milliseconds
-    }
+    },
+    store:MongoStore.create(
+        {
+            mongoUrl:'mongodb://localhost',
+            dbName:'iConnect',
+            stringify:false,
+            autoRemove:'disabled'
+        },
+        function(err){
+            console.log(err || 'connect-mongodb setup ok');
+        }
+    )
 }));
 
 app.use(passport.initialize());
