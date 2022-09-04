@@ -7,6 +7,11 @@
     <title><%=title%></title>
 </head>
 <body>
-    <h1>iConnect / <%=title %></h1>
+    <% if(locals.user) {%> 
+        <h1>iConnect | <%=title %></h1>
+        <h2 style="color:red">Welcome <%=user.name %></h2>
+    <% }else{ %>
+        <h1>iConnect | <%=title %></h1>
+    <% } %>  
 </body>
 </html>
