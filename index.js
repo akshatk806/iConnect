@@ -3,6 +3,7 @@ const port=8000;
 const cookieParser=require('cookie-parser');
 const app=express();
 
+const expressLayouts=require('express-ejs-layouts');
 const db=require('./config/mongoose');
 
 // Used for session cookie
@@ -26,6 +27,11 @@ app.use(express.urlencoded());
 app.use(cookieParser());
 
 app.use(express.static('./assets'))
+
+app.use(expressLayouts);
+// extract style sheets and script from sub pages into the layout
+app.set('layout extractStyles',true);
+app.set('layout extractScripts',true);
 
 // set up the view engine
 app.set('view engine','ejs');
