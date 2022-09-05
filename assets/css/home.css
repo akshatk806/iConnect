@@ -1,0 +1,9 @@
+#feed-posts {
+  margin: 50px 0; }
+  #feed-posts h1 {
+    color: darkblue; }
+  #feed-posts textarea {
+    resize: none; }
+  #feed-posts input[type="submit"] {
+    cursor: pointer;
+    background: yellow; }
