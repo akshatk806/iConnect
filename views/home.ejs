@@ -1,7 +1,7 @@
-<h1>iDiscuss | <%=title%></h1>
-<h2 style="color: red;">
-    <% if(locals.user) {%> 
-        Welcome
-        <%= user.name %> 
-    <% } %> 
-</h2>
+<h1>iConnect | <%=title%></h1>
+
+<% if(locals.user) {%> 
+    <h2>
+        Welcome <%= user.name %> 
+    </h2>
+<% } %> 
