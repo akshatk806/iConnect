@@ -5,5 +5,4 @@
   #feed-posts textarea {
     resize: none; }
   #feed-posts input[type="submit"] {
-    cursor: pointer;
-    background: yellow; }
+    cursor: pointer; }

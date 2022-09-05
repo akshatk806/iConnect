@@ -10,6 +10,8 @@ router.get('/',home_controller.home)
 router.get('/about',about_controller.about)
 router.use('/users',require('./users.js'));
 
+router.use('/posts',require('./posts.js'))
+
 // for any further routes, access from here
 // router.use('/routerName',require('./routerFile'))
 
