@@ -6,4 +6,6 @@ const posts_controller=require('../controllers/posts_controller.js');
 
 router.post('/create',passport.checkAuthentication,posts_controller.create);
 
+router.get('/delete/:id',passport.checkAuthentication,posts_controller.delete);
+
 module.exports=router
