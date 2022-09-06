@@ -9,4 +9,10 @@
     input[type="submit"]{
         cursor: pointer;
     }
+
+    #posts-list-container{
+        li{
+            margin:25px 0;
+        }
+    }
 }

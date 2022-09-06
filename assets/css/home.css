@@ -6,3 +6,5 @@
     resize: none; }
   #feed-posts input[type="submit"] {
     cursor: pointer; }
+  #feed-posts #posts-list-container li {
+    margin: 25px 0; }

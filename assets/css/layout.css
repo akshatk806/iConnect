@@ -9,5 +9,5 @@ body {
   background-color: lightblue; }
   body main {
     display: block;
-    height: 100vh;
+    height: auto;
     padding: 30px; }
