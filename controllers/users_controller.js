@@ -1,9 +1,12 @@
-User=require('../models/user')
+const User = require('../models/user')
 
 // All these are actions
 module.exports.profile=function(request,respone){
-    respone.render('profile',{
-        title:"iConnect | Profile"
+    User.findById(request.params.id,function(err,user){
+        respone.render('profile',{
+            title:"iConnect | Profile",
+            profile_user:user
+        })
     })
 }
 module.exports.posts=function(request,respone){
