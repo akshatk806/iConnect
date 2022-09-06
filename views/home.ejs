@@ -48,18 +48,20 @@
                             <ul id="post-comments-<%= post._id %>">
                                 <% for (comment of post.comments){%>
                                     
-                                <p>
-                                    <% if((locals.user) && (locals.user.id==comment.user.id)){ %> 
-                                        <small>    
-                                            <a href="/comments/delete/<%=comment.id%>">x</a>
+                                <li>
+                                    <p>
+                                        <% if((locals.user) && (locals.user.id==comment.user.id)){ %> 
+                                            <small>    
+                                                <a href="/comments/delete/<%=comment.id%>">x</a>
+                                            </small>
+                                        <% } %> 
+                                        <%= comment.content %>
+                                        <br>
+                                        <small style="color: red;">
+                                            <%= comment.user.name %>
                                         </small>
-                                    <% } %> 
-                                    <%= comment.content %>
-                                    <br>
-                                    <small style="color: red;">
-                                        <%= comment.user.name %>
-                                    </small>
-                                </p>    
+                                    </p>    
+                                </li>
                                 <%} %>
                             </ul>
                         </div>
