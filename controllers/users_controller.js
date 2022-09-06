@@ -9,6 +9,18 @@ module.exports.profile=function(request,respone){
         })
     })
 }
+
+module.exports.update=function(request,response){
+    if(request.user.id==request.params.id){                 // Authentication
+        User.findByIdAndUpdate(request.params.id,request.body,function(err,user){
+            return response.redirect('back')
+        })
+    }
+    else{
+        return response.status(401).send('Unauthorized')
+    }
+}
+
 module.exports.posts=function(request,respone){
     respone.render('posts',{
         title:"iConnect | POSTS"
