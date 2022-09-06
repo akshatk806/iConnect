@@ -29,8 +29,8 @@
                         <%= post.content %>
                         <br>
                         <small style="color: blue;">
-                            <%= post.user.name  %> 
-                        </small> 
+                            <strong><%= post.user.name  %></strong> 
+                        </small>
                     </p>
 
                     <div class="post-comments">
@@ -49,6 +49,11 @@
                                 <% for (comment of post.comments){%>
                                     
                                 <p>
+                                    <% if((locals.user) && (locals.user.id==comment.user.id)){ %> 
+                                        <small>    
+                                            <a href="/comments/delete/<%=comment.id%>">x</a>
+                                        </small>
+                                    <% } %> 
                                     <%= comment.content %>
                                     <br>
                                     <small style="color: red;">
