@@ -13,7 +13,13 @@ module.exports.home=function(request,response){
     // })
 
     // Populate the user of each post
-    Post.find({}).populate('user').exec(function(err,posts){
+    Post.find({}).populate('user')
+    .populate({
+        path:'comments',
+        populate:{
+            path:'user'
+        }
+    }).exec(function(err,posts){
         return response.render('home',{
             title:"iConnect | Home",
             posts:posts
