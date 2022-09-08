@@ -1,5 +1,5 @@
 #feed-posts {
-  margin: 50px 0; }
+  margin: 20px 0; }
   #feed-posts h1 {
     color: darkblue; }
   #feed-posts textarea {
@@ -9,5 +9,12 @@
   #feed-posts #posts-list-container li {
     margin: 25px 0; }
 
-#user-freinds {
-  margin-bottom: 20px; }
+.home-container {
+  display: flex; }
+  .home-container #feed-posts {
+    width: 70%; }
+  .home-container #user-freinds {
+    width: 30%;
+    margin: 20px 0;
+    padding: 10px;
+    border-left: 2px solid #c6c6c6; }
