@@ -86,6 +86,6 @@ module.exports.destroySession=function(request,response,next){
             return;
         }
     });
-    request.flash('success','Logged out Successfully')       // To pass on these messages to ejs template we create a middleware which fetches everything from request flash and passed it to locals
-    return response.redirect('/users/sign-in');
+    request.flash('success','Logged out Successfully');      // To pass on these messages to ejs template we create a middleware which fetches everything from request flash and passed it to locals
+    return response.redirect('/');
 }

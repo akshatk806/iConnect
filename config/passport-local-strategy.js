@@ -8,19 +8,20 @@ const User=require('../models/user');
 // Sign-in the user
 // Creating Authentication function -> We need to tell passport to use this local strategy that we created (we are telling the passport to use localstrategy in which we defining username field and after this there is a function with 3 arguments email,password and done the done is the callback function which is reporting back to passport),(Passport is using local strategy to find the user who is signed in)
 passport.use(new LocalStrategy({
-    usernameField:'email'                  // username field in the schema
+        usernameField:'email',                  // username field in the schema
+        passReqToCallback:true                  // This allow us to make first argument is request
     },
-    function(email,password,done){         // done is a function which is inbuilt to passport, done is reporting back to password
+    function(request,email,password,done){         // done is a function which is inbuilt to passport, done is reporting back to password
 
         // find the user and establish the identiy
         User.findOne({email:email},function(err,user){              //   {email in the model(schema), email passed in the function}
             if(err){
-                console.log("Error in finding the user  ---> Passport");
+                request.flash("error",err);
                 return done(err);                                   // Report an error to passport
             }
 
             if(!user || user.password!=password){
-                console.log("Invalid username/password");
+                request.flash('error','Invalid Username/Password');
                 return done(null,false);                           // done() it has 2 arguments , the 1st one is err-> if error or null-> if no error and the 2nd argument is false -> if authentication fails ot user-> if authentication successfull
             }
 

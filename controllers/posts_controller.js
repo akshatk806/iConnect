@@ -7,13 +7,14 @@ module.exports.create=async function(request,response){
             content:request.body.content,
             user:request.user._id
         });
+        request.flash('success','Post Published');
         return response.redirect('back')
 
     }catch(err){
-        console.log("Error:",err);
-        return;
+        request.flash('error',err);
+        return response.redirect('back');
     }
-}
+} 
 
 
 // Deleting a post
@@ -27,13 +28,15 @@ module.exports.delete=async function(request,response){
             post.remove();
             
             await Comment.deleteMany({post:request.params.id})
+            request.flash('success','Post Deleted');
             return response.redirect('back');
         }
         else{
+            request.flash('error','You cannot delete this post');
             return response.redirect('back')
         }
     }catch(err){
-        console.log("Error:",err);
-        return;
+        request.flash('error',err);
+        return response.redirect('back');
     }
 }
