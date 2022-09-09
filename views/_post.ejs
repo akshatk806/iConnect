@@ -1,8 +1,8 @@
-<li>
+<li id="post-<%= post._id %> ">               <!-- In template .id and ._id is same untill you compairing them -->
     <p>
         <% if((locals.user) && (locals.user.id==post.user.id)){ %> 
             <small>
-                <a href="/posts/delete/<%=post.id%>">x</a>
+                <a class="delete-post-button" href="/posts/delete/<%=post.id%>">x</a>
             </small>
         <% } %> 
         <%= post.content %>
