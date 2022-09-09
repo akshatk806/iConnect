@@ -39,7 +39,7 @@ app.set('views','./views');
 
 
 
-// Middleware for session cookie
+// Middleware for session cookie, it takes the session cookie and encryptes it
 // Mongo store is use to the session cookie in the db
 app.use(session({
     name:'iConnect',    // name of the cookie
@@ -79,3 +79,5 @@ app.listen(port,(err)=>{
 });
 
 // Please take care the order of all middlewares
+
+// app.use() --> Hum App ko batate h ki yeh use karna h

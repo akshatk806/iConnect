@@ -72,7 +72,7 @@ module.exports.create=function(request,respone){
     })
 }
 
-// Signing in the user
+// Signing in the user, session is created in passport.js itself
 module.exports.createSession=function(request,response){
     return response.redirect('/');
 }

@@ -10,7 +10,7 @@ const User=require('../models/user');
 passport.use(new LocalStrategy({
     usernameField:'email'                  // username field in the schema
     },
-    function(email,password,done){         // done is a function which is inbuilt to passport
+    function(email,password,done){         // done is a function which is inbuilt to passport, done is reporting back to password
 
         // find the user and establish the identiy
         User.findOne({email:email},function(err,user){              //   {email in the model(schema), email passed in the function}
@@ -21,7 +21,7 @@ passport.use(new LocalStrategy({
 
             if(!user || user.password!=password){
                 console.log("Invalid username/password");
-                return done(null,false);
+                return done(null,false);                           // done() it has 2 arguments , the 1st one is err-> if error or null-> if no error and the 2nd argument is false -> if authentication fails ot user-> if authentication successfull
             }
 
             // If user found then we pass the user
@@ -31,12 +31,12 @@ passport.use(new LocalStrategy({
 ));
 
 
-// Serializing the user to decide which key is to be kept in the cookies (You need to put userId in the cookie and not the rest of the information)
+// Serializing the user to decide which key is to be kept in the cookies (In manual Authentication you need to put user_id in the cookie and not the rest of the information as response.cookie('user_id',user.id))
 passport.serializeUser(function(user,done){
-    done(null,user.id)
+    done(null,user.id)     // user is already passed in line 28 and this automatically encryptes the id
 });
 
-// Deserializing the user from the key in the cookies (When the cookie is sent back to the server and establish the identity that which user is there from the database we are using that id to find the user)
+// Deserializing the user from the key in the cookies (When the cookie is sent back to the server and establish the identity that which user is there from the database we are using that id to find the user so that is desearializing)
 passport.deserializeUser(function(id,done){
     User.findById(id,function(err,user){
         if(err){
@@ -44,23 +44,25 @@ passport.deserializeUser(function(id,done){
             return done(err); 
         }
 
-        return done(null,user);
+        return done(null,user);        // null because no error and user because user is found
     });
 });
 
 
 // Sending data of signed-in current user to views
 
-// Check the user is authenticated
+// Middleware to check the user is signed-in or not
+// Check the user is authenticated, We use this function as a middleware however it is not inbuilt function to passport
 passport.checkAuthentication=function(request,response,next){
     // if the user is signed-in, then pass on the request to the next function(controller's action)
     if(request.isAuthenticated()){
-        return next ()                  // let the user view the page
+        return next();                  // let the user view the page, if the user is signed-in passing it to the page
     }
     // if the user is not signed-in
     return response.redirect('/users/sign-in');
 }
 
+// Set the user for view
 passport.setAuthenticatedUser=function(request,response,next){
     if(request.isAuthenticated()){
         // request.user contains the current signed in user from the session cookie and we are just sending this to the locals for the views
