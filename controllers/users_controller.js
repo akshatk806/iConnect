@@ -34,8 +34,8 @@ module.exports.update= async function(request,response){
 
                 if(request.file){
                     // saving the path of the uploaded file into the avatar field in the user
-                    user.avatar=user.avatarPath+'/'+request.file.filename;
-                }
+                    user.avatar=User.avatarPath+'/'+request.file.filename;
+                } 
                 user.save()
                 return response.redirect('back');
             });

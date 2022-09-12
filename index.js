@@ -2,6 +2,7 @@ const express=require('express');
 const port=8000;
 const cookieParser=require('cookie-parser');
 const app=express();
+const path=require('path');
 
 const expressLayouts=require('express-ejs-layouts');
 const db=require('./config/mongoose');
@@ -30,6 +31,9 @@ app.use(express.urlencoded());
 app.use(cookieParser());
 
 app.use(express.static('./assets'))
+
+// Make the uploads path available to the browser 
+app.use('/uploads',express.static(__dirname+'/uploads'));
 
 app.use(expressLayouts);
 // extract style sheets and script from sub pages into the layout
