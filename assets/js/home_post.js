@@ -11,10 +11,12 @@
                 type:'post',
                 url:'/posts/create',
                 data:newPostForm.serialize(),
-                success:function(data){
+                success:function(data){                       // the data inside () is reponse data which is JSON
+                    console.log(data);
+                    // console.log(data.data)
                     let newPost=newPostDOM(data.data.post)
                     $('#posts-list-container>ul').prepend(newPost);
-                    deletePost($('.delete-post-button',newPost));
+                    deletePost($('. delete-post-button',newPost));
                 },
                 error:function(error){
                     console.log(error.responseText)
@@ -27,9 +29,9 @@
     let newPostDOM=function(post){
         return $(`<li id="post-${post._id}">               
                     <p>
-                            <small>
-                                <a class="delete-post-button" href="/posts/delete/${ post._id }">x</a>
-                            </small>
+                        <small>
+                            <a class="delete-post-button" href="/posts/delete/${ post._id }">x</a>
+                        </small>
                         ${post.content}
                         <br>
                         <small style="color: blue;">
@@ -39,11 +41,11 @@
                 
                     <div class="post-comments">
                 
-                            <form action="/comments/create" method="POST">
-                                <input type="text" name="content" placeholder="Add a comment...">
-                                <input type="hidden" name="post" value="${post._id}">
-                                <input type="submit" value="Add comment">
-                            </form>
+                        <form action="/comments/create" method="POST">
+                            <input type="text" name="content" placeholder="Add a comment...">
+                            <input type="hidden" name="post" value="${post._id}">
+                            <input type="submit" value="Add comment">
+                        </form>
                         
                         <div class="post-comments-list">
                             <ul id="post-comments-${post._id}">
@@ -64,7 +66,8 @@
                 type:'get',
                 url:$(deleteLink).prop('href'),         // href of anchor tag
                 success:function(data){
-                    $(`#post-${data.data.post_id}`).remove()
+                    console.log(data);
+                    $(`#post-${data.data.post_id}`).remove();
                 },
                 error:function(error){
                     console.log(error.responseText);
