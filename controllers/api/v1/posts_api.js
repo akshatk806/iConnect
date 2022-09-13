@@ -24,7 +24,7 @@ module.exports.delete=async function(request,response){
     try{
         let post=await Post.findById(request.params.id);
     
-        // if(post.user == request.user.id){
+        if(post.user == request.user.id){
             post.remove();
             
             await Comment.deleteMany({post:request.params.id})
@@ -32,11 +32,12 @@ module.exports.delete=async function(request,response){
             return response.json(200,{
                 message:"Post and associated comment delete successfully"
             });
-        // }
-        // else{
-        //     request.flash('error','You cannot delete this post');
-        //     return response.redirect('back')
-        // }
+        }
+        else{
+            return response.json(401,{
+                message:"You cannot delete this post!"
+            })
+        }
     }catch(err){
         console.log(err);
         response.json(500,{
