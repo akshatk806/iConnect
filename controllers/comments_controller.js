@@ -1,21 +1,25 @@
 const Comment=require('../models/comment')
 const Post=require('../models/posts')
+const commentsMailer=require('../mailers/comments_mailer');
 
-module.exports.create=function(request,response){
-    Post.findById(request.body.post,function(err,post){
-        if(post){
-            Comment.create({
-                content:request.body.content,
-                post:request.body.post,
-                user:request.user._id
-            },function(err,comment){
-                post.comments.push(comment);
-                post.save();
+module.exports.create=async function(request,response){
+    let post=await Post.findById(request.body.post);
+    if(post){
+        let comment=await Comment.create({
+            content:request.body.content,
+            post:request.body.post,
+            user:request.user._id
+        });
+        post.comments.push(comment);
+        post.save();
 
-                response.redirect('/');
-            });
-        }
-    })
+        comment=await Comment.findOne({user:request.user._id}).populate('user','name email').exec();
+        
+        // console.log("Comments in comment_controller:",comment);
+        commentsMailer.newComment(comment);
+
+        response.redirect('/');
+    }
 }
 
 module.exports.delete=function(request,response){

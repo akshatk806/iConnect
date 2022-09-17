@@ -9,8 +9,8 @@ let transporter=nodemailer.createTransport({
     port:587,                     // port 587-for TLS and port 465-for SSL
     secure:false,
     auth:{
-        user:'akshatk180@gmail.com',
-        pass:'Akshat@2002'
+        user:'iconnectnodejs@gmail.com',
+        pass:'fpft mzza oacc pjya'
     }
 });
 
