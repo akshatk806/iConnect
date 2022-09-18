@@ -21,7 +21,13 @@ const userSchema=new mongoose.Schema({
     },
     avatar:{                 // avatar field, path saved here
         type:String
-    }
+    },
+    friendships:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'Friendship'
+        }
+    ]
 },{
     timestamps:true
 });
