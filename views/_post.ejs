@@ -1,6 +1,6 @@
 <li id="post-<%= post._id %> ">               <!-- In template .id and ._id is same untill you compairing them -->
     <p>
-        <% if((locals.user) && (locals.user.id==post.user.id)){ %> 
+        <% if(locals.user && locals.user.id==post.user.id){ %> 
             <small>
                 <a class="delete-post-button" href="/posts/delete/<%=post.id%>">x</a>
             </small>
@@ -10,12 +10,24 @@
         <small style="color: blue;">
             <strong><%= post.user.name  %></strong> 
         </small>
+        <br>
+
+        <!-- Display the likes of this post, if the user is logged in,then show the link to toggle likes,else just show the count -->
+        <small>
+            <% if(locals.user){ %>
+                <a class="toggle-like-button" data-likes="<%=post.likes.length%>" href="/likes/toggle/?id=<%=post._id%>&type=Post">
+                    <%= post.likes.length %> Likes 
+                </a>
+            <% }else { %>
+                <%= post.likes.length %> Likes 
+            <% } %> 
+        </small>
     </p>
 
     <div class="post-comments">
         <% if(locals.user) { %> 
 
-            <form action="/comments/create" method="POST">
+            <form id="post-<%=post._id%>-comments-form" action="/comments/create" method="POST">
                 <input type="text" name="content" placeholder="Add a comment...">
                 <input type="hidden" name="post" value="<%=post._id%>">
                 <input type="submit" value="Add comment">

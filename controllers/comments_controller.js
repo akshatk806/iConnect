@@ -26,7 +26,16 @@ module.exports.create=async function(request,response){
                     return
                 }
                 console.log("job enqueued ",job.id);
-            })
+            });
+
+            if(request.xhr){
+                return response.status(200).json({
+                    data:{
+                        comment:comment
+                    },
+                    message:"Post created"
+                });
+            }
     
             request.flash('success','Comment Published!');
             response.redirect('/');
@@ -47,6 +56,15 @@ module.exports.delete=async function(request,response){
 
             let post=Post.findByIdAndUpdate(postId,{$pull:{comments:request.params.id}});            // $pull is inbuilt {pull from where, what do I need to pull}
 
+            if(request.xhr){
+                return response.status(200).json({
+                    data:{
+                        comment_id:request.params.id
+                    },
+                    message:"Post deleted"
+                })
+            }
+
             request.flash('success','Comment deleted!');
             return response.redirect('back');
         }
@@ -55,7 +73,7 @@ module.exports.delete=async function(request,response){
             return response.redirect('back');
         }
     } catch (error) {
-        request.flash('error',err)
+        request.flash('error',error)
         return
     }
 }

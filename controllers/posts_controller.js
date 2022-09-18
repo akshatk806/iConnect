@@ -9,6 +9,9 @@ module.exports.create=async function(request,response){
         });
 
         if(request.xhr){
+            // If we want to populate the name of the user (we'll not want to send the password in the API), this is how we do it
+            post=await Post.findOne({user:request.user._id}).populate('user','name').exec();
+
             return response.status(200).json({
                 data:{
                     post:post
@@ -46,7 +49,7 @@ module.exports.delete=async function(request,response){
                     message:"Post deleted"
                 });
             }
-            request.flash('success','Post Deleted');
+            request.flash('success','Post Deleted aah!');
             return response.redirect('back');
         }
         else{
