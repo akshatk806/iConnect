@@ -1,0 +1,1 @@
+// Chat engine is the file that is going to communicate with client side which is from browser and /config/chat_sockets.js is the one which is going to be observer or the server which is going to recieve the incoming connection from all the user which are subscriber
