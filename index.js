@@ -1,4 +1,5 @@
 const express=require('express');
+const environment=require('./config/environment');
 const port=8000;
 const cookieParser=require('cookie-parser');
 const app=express();
@@ -27,8 +28,8 @@ console.log("Chat server is listening on port 5000");
 
 
 app.use(sassMiddleware({
-    src:'./assets/scss',
-    dest:'./assets/css',
+    src:path.join(__dirname,environment.asset_path,'scss'),
+    dest:path.join(__dirname,environment.asset_path,'css'),
     debug:true,
     outputStyle:'extended',
     prefix:'/css'
@@ -38,7 +39,7 @@ app.use(express.urlencoded());
 
 app.use(cookieParser());
 
-app.use(express.static('./assets'))
+app.use(express.static(environment.asset_path));
 
 // Make the uploads path available to the browser 
 app.use('/uploads',express.static(__dirname+'/uploads'));
@@ -58,7 +59,7 @@ app.set('views','./views');
 // Mongo store is use to the session cookie in the db
 app.use(session({
     name:'iConnect',    // name of the cookie
-    secret:'blahsomething',   // TODO -> Change the secret before deploying at production
+    secret:environment.session_cookie_key,   // TODO -> Change the secret before deploying at production
     saveUninitialized:false,
     resave:false,
     cookie:{

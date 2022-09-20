@@ -1,5 +1,6 @@
 const User=require('../../../models/user');
 const jwt=require('jsonwebtoken');
+const environment=require('../../../config/environment');
 
 module.exports.createSession=async function(request,response){
 
@@ -16,7 +17,7 @@ module.exports.createSession=async function(request,response){
             return response.json(200,{
                 message:"Sign in Successfully, here is your token please keep your token safe!",
                 data:{
-                    token:jwt.sign(user.toJSON(),'iconnect',{expiresIn:'100000'})              // Generating a token
+                    token:jwt.sign(user.toJSON(),environment.jwt_secret,{expiresIn:'100000'})              // Generating a token
                 }
             })
         }
