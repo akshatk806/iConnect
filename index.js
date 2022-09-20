@@ -15,6 +15,7 @@ const passportJWT=require('./config/passport-jwt-strategy.js');
 const passportGoogle=require('./config/passport-google-oauth2-strategy');
 const MongoStore=require('connect-mongo');
 
+const sassMiddleware=require('node-sass-middleware');
 const flash=require('connect-flash')
 const customMiddleware=require('./config/middleware');
 
@@ -24,7 +25,6 @@ const chatSockets=require('./config/chat_sockets').chatSockets(chatServer);
 chatServer.listen(5000);
 console.log("Chat server is listening on port 5000");
 
-const sassMiddleware=require('node-sass-middleware');
 
 app.use(sassMiddleware({
     src:'./assets/scss',
