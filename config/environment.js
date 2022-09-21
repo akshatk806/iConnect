@@ -1,3 +1,15 @@
+const fs=require('fs');
+const rfs=require('rotating-file-stream');
+const path=require('path');
+
+const logDirectory = path.join(__dirname, '../production_logs');
+fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
+
+const accessLogStream = rfs.createStream('access.log', {
+    interval: '1d',
+    path: logDirectory
+});
+
 const development={
     name:'development',
     asset_path:'./assets',
@@ -16,7 +28,11 @@ const development={
     google_client_id:"108670182869-g60cqle6vsa452qnvs3rll0io7gi52pt.apps.googleusercontent.com",
     google_client_secret:"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",
     google_callback_URL:"http://localhost:8000/users/auth/google/callback",
-    jwt_secret:'iconnect'
+    jwt_secret:'iconnect',
+    morgan:{
+        mode:'dev',
+        options:{stream:accessLogStream}
+    }
 }
 
 const production={
@@ -37,7 +53,15 @@ const production={
     google_client_id:process.env.ICONNECT_GOOGLE_CLIENT_ID,
     google_client_secret:process.env.ICONNECT_GOOGLE_CLIENT_SECRET,
     google_callback_URL:process.env.ICONNECT_GOOGLE_CALLBACK_URL,
-    jwt_secret:process.env.ICONNECT_JWT_SECRET
+    jwt_secret:process.env.ICONNECT_JWT_SECRET,
+    morgan:{
+        mode:'combined',
+        options:{stream:accessLogStream}
+    }
 }
 
+// when we have to run in development environment
+//module.exports=development 
+
+// when we have to run in production environment
 module.exports=eval(process.env.ICONNECT_ENVIRONMENT)==undefined?development:eval(process.env.ICONNECT_ENVIRONMENT);
